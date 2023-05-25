@@ -18,10 +18,15 @@ import path from 'node:path';
 import { searchForWorkspaceRoot } from 'vite';
 import { defineConfig } from 'vitest/config';
 import { version } from '../directus/package.json';
+import UnoCSS from 'unocss/vite';
+
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
 
 const API_PATH = path.join('..', 'api');
 const EXTENSIONS_PATH = path.join(API_PATH, 'extensions');
 
+console.log(process.env)
 // https://vitejs.dev/config/
 export default defineConfig({
 	define: {
@@ -30,6 +35,7 @@ export default defineConfig({
 	plugins: [
 		directusExtensions(),
 		vue(),
+		UnoCSS(),
 		yaml({
 			transform(data) {
 				return data === null ? {} : undefined;
@@ -52,7 +58,11 @@ export default defineConfig({
 			},
 		},
 		fs: {
-			allow: [searchForWorkspaceRoot(process.cwd()), ...getExtensionsRealPaths()],
+			allow: [
+				searchForWorkspaceRoot(process.cwd()),
+				...getExtensionsRealPaths(),
+				process.env.EXTENSIONS_DEV_PATH ?? null
+			],
 		},
 	},
 	test: {
