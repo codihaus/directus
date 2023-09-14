@@ -24,6 +24,12 @@ import UnoCSS from 'unocss/vite';
 const API_PATH = path.join('..', 'api');
 const EXTENSIONS_PATH = path.join(API_PATH, 'extensions');
 
+import {config} from "dotenv";
+config();
+
+const apiUrl = process.env.API_URL ? process.env.API_URL : 'http://127.0.0.1:8055/';
+console.log(apiUrl)
+
 // https://vitejs.dev/config/
 export default defineConfig({
 	define: {
@@ -60,7 +66,7 @@ export default defineConfig({
 		port: 8080,
 		proxy: {
 			'^/(?!admin)': {
-				target: process.env.API_URL ? process.env.API_URL : 'http://127.0.0.1:8055/',
+				target: apiUrl,
 				changeOrigin: true,
 			},
 		},

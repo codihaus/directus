@@ -1,8 +1,8 @@
 {
-	"name": "app-vinhbao",
+	"name": "cdh",
 	"version": "1.0.0",
 	"description": "",
-	"homepage": "https://app.nhabepthongminh.net",
+	"homepage": "",
 	"type": "module",
 	"exports": {
 		".": "./dist/index.html",
